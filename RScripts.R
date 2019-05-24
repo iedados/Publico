@@ -177,3 +177,28 @@ logo_cecon <- function (grafico = last_plot())
       modeBarButtonsToRemove = list("sendDataToCloud","zoom2d","pan2d","select2d","lasso2d", "zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian", "hoverCompareCartesian", "resetScale2d", "toggleSpikelines")
     )
 }
+
+
+#adiciona logo cecon em um gráfico plotly e muda a barra modeBar
+logo_cesit <- function (grafico = last_plot())
+{
+  grafico %>% ggplotly() %>%    
+    layout(
+      images = list(
+        list(source = "https://raw.githubusercontent.com/iedados/Publico/master/Logo_CESIT.png",
+             xref = "paper",
+             yref = "paper",
+             x= 0.0,
+             y= 1.0,
+             sizex = 0.25,
+             sizey = 0.25,
+             opacity = 0.4
+        )) )%>% 
+    config(
+      displayModeBar = TRUE , 
+      displaylogo=FALSE,
+      collaborate = FALSE,
+      locale = "pt-br",
+      modeBarButtonsToRemove = list("sendDataToCloud","zoom2d","pan2d","select2d","lasso2d", "zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian", "hoverCompareCartesian", "resetScale2d", "toggleSpikelines")
+    )
+}
