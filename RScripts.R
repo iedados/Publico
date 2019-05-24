@@ -192,7 +192,7 @@ logo_cesit <- function (grafico = last_plot())
              y= 1.0,
              sizex = 0.25,
              sizey = 0.25,
-             opacity = 0.4
+             opacity = 0.25
         )) )%>% 
     config(
       displayModeBar = TRUE , 
