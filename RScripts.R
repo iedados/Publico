@@ -1,0 +1,179 @@
+##FUNÇÔES ESTATISTICAS#######################################################################
+excelDate2Date <- function(excelDate) {
+  Date <- excelDate + as.Date("1900-01-01") - 2
+  return(Date)
+} 
+#cria uma função que retorna texto "positivo" "negativo" dependendo se acima ou abaixo de z 
+FazTexto.Cortes1 <- function(x,z,y){#x é a séria a ser análisada, z fronteira, y=1 se feminino, y=2 se masculino
+  if(x>=z & y==1) {k<-"positiva"}
+  if(x>=z & y==2) {k<-"positivo"}
+  if(x<z & y==1) {k<-"negativa"}
+  if(x<z & y==2) {k<-"negativo"}
+  return(k)
+}
+#cria uma função que retorna texto "muito ruim", "ruim", "bom", "muito bom"
+FazTexto.Cortes3 <- function(x,y,z,w){#x é a séria a ser análisada, y=corte1, z=corte2, w=corte3
+  k<-"muito ruim"
+  if(x>y) {k<-"ruim"}
+  if(x>z) {k<-"bom"}
+  if(x>w) {k<-"muito bom"}
+  return(k)
+}
+#cria uma função que retorna o ultimo valor de uma série x 
+FazTexto.UltimoValor <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round(x[length(x)],digits = y), big.mark=".", decimal.mark=",") 
+  return(k)
+}
+#cria uma função que retorna o valor 12 meses anteriores de uma série mensal x 
+FazTexto.Valor12mAntes <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round(x[length(x)-11],digits = y), big.mark=".", decimal.mark=",") 
+  return(k)
+}
+#cria uma função que retorna a variação absoluta (em pontos percentuais se ja for uma série percental) de uma série no ultimo ano 
+FazTexto.Var12m.Abs <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round(x[length(x)]-x[length(x)-11],digits = y), big.mark=".", decimal.mark=",") #subtrai o ultimo valor da série x de 12 meses anteriores
+  return(k)
+}
+#cria uma função que retorna a variação percentuais de uma série no ultimo ano
+FazTexto.Var12m.porc <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round((((x[length(x)]/x[length(x)-11])-1)*100),digits = y), big.mark=".", decimal.mark=",") #divide o ultimo valor da série x de 12 meses anteriores
+  return(k)
+}
+#cria uma função que retorna a variação em pontos percentuais de uma série no ultimos dois anos
+FazTexto.Var24m.Abs <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round(x[length(x)]-x[length(x)-23],digits = y), big.mark=".", decimal.mark=",") #subtrai o ultimo valor da série x de 24 meses anteriores
+  return(k)
+}
+#cria uma função que retorna a variação percentuais de uma série no ultimos dois anos
+FazTexto.Var24m.porc <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round((((x[length(x)]/x[length(x)-23])-1)*100),digits = y), big.mark=".", decimal.mark=",") #divide o ultimo valor da série x de 24 meses anteriores
+  return(k)
+}
+#cria função para acumulado em 12 meses
+FazTexto.Acc12m <- function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k<-0
+  for(i in 0:11) {         #para i vezes menos 12 
+    k<-k + x[length(x)-i] #faz soma de 12 passos
+  }
+  k=format(round(k,digits = y), big.mark=".", decimal.mark=",") #arredonda para y digitos
+  return(k)
+}
+#cria função para media movel  12 meses 
+MM12m <- function(x) {
+  y<-c(1:(length(x)))                        #cria variavel y to tamanho da serie inserida
+  for(i in 1:(length(x)-11)) {         #para i vezes menos 12 
+    y[i+11]<-mean(x[(i+0):(i+11)]) #faz média de 12 passos
+  }
+  y[1:12]<-NA                                #coloca NA nas primeiras 12 entradas
+  return(y)                                  #dá como retorno a série media movel 12 meses
+}
+#cria função para taxa anualizado (eleva a 12 potência)(ex. IPCA=2,33)
+FazTexto.TaxaAnualizada <- function(x){#x é a séria a ser análisada
+  k<-c(1:length(x)) 
+  for(i in 0:length(x)) {         
+    k[i]<-(1+x[i]/100)^12
+  }
+  k<-(k-1)*100
+  return(k)
+}
+#cria função para criar número indice de uma série mensal de inflação (para usar em deflacionamentos até para a ultima data)
+FazTexto.N_Indice <- function(x){#x é a séria a ser análisada
+  k<-c(1:length(x)) #retorna o numero indice para deflacionar para o ultimo valor do ipca
+  k[1]<-(1+x[1]/100)
+  for(i in 2:length(x)) {         
+    k[i]<-(1+x[i]/100)*k[i-1]
+  }
+  k<-k[length(k)]/k
+  return(k)
+}
+
+FazTexto.Var12m  <-  function(x) {
+  y<-c(1:(length(x)))                        #cria variavel y to tamanho da serie inserida
+  for(i in 13:(length(x))) {         #para i vezes menos 12 
+    y[i] <- (((x[i]/x[i-12])-1)*100) #dividindo mes "atual" pelo mesmo mes do ano anterior
+  }
+  y[1:12]<-NA                                #coloca NA nas primeiras 12 entradas
+  return(y)                                  
+}
+
+geranota <- function(
+  fonte = "BC", # fonte
+  ultimadata = UltimaDataSerie,
+  serie = NULL
+) {
+  fonte_ = paste0("**Fonte:** ", fonte, ". ")
+  data_ = paste0("Na &uacute;ltima atualiza&ccedil;&atilde;o (em ", format(Sys.Date(), "%d de %B de %Y"), ") o &uacute;ltimo dado dispon&iacute;vel era ", ultimadata, ".")
+  
+  if (is.null(serie) == FALSE) {
+    serie_ = paste0(" Series usadas: ", serie)
+    
+  } else {
+    serie_ = ""
+  }
+  nota_ = paste0(fonte_, data_, serie_)
+  
+  return(nota_)
+}
+
+
+salvar_grafico <- function(){ # Usar sem argumento
+  # Nomea o arquivo de acordo com o nome do .Rmd
+  ggsave(paste0("./IMAGENS/", format(gsub(x = knitr::current_input(), pattern = ".Rmd", replacement = ".png"))), device = "png")
+  ggsave(paste0("./IMAGENS/", format(gsub(x = knitr::current_input(), pattern = ".Rmd", replacement = ".svg"))), device = "svg")
+}
+
+
+tx_crescimento <- function(df = d, n = 1){
+  # df = dataframe/xts
+  # n = 1 -> Mês/Mês anterior, Ano/Ano anterior, etc
+  # n = 4 -> Trimestre/Mesmo trimestre do ano anterior
+  # ...
+  # n = 12 -> Mês/Mesmo mês do ano anterior
+  # Atenção com objetos ts: n precisa ser negativo
+  growth <- diff(df, n = n)/lag(df, n = n)
+  return(growth)
+}
+
+
+# Vincula csv ao html
+embed_data= function(x= mtcars, filename= "file.csv", label= "Download"){
+  if (!require(openssl)) {
+    install.packages('openssl')
+  }
+  # Create encoded Base64 datastream 
+  encode_data= function(x){
+    write.csv2(x, "file.csv")
+    enc= sprintf('data:text/csv;base64,%s', openssl::base64_encode(paste0(readLines("./file.csv"), collapse="\n")) )
+    unlink("./file.csv")
+    return(enc)
+  }
+  
+  # String result ready to be placed in rmarkdown
+  paste0("<a download='", filename, "' href=", encode_data(x), ">", label, "</a>")
+  
+}
+
+
+#adiciona logo cecon em um gráfico plotly e muda a barra modeBar
+logo_cecon <- function (grafico = last_plot())
+{
+  grafico %>% ggplotly() %>%    
+    layout(
+      images = list(
+        list(source = "https://raw.githubusercontent.com/iedados/Publico/master/logo_CECON.png",
+             xref = "paper",
+             yref = "paper",
+             x= 0.0,
+             y= 1.0,
+             sizex = 0.25,
+             sizey = 0.25,
+             opacity = 0.4
+        )) )%>% 
+    config(
+      displayModeBar = TRUE , 
+      displaylogo=FALSE,
+      collaborate = FALSE,
+      locale = "pt-br",
+      modeBarButtonsToRemove = list("sendDataToCloud","zoom2d","pan2d","select2d","lasso2d", "zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian", "hoverCompareCartesian", "resetScale2d", "toggleSpikelines")
+    )
+}
