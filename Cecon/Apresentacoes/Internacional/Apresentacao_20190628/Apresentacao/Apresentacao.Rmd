@@ -1,0 +1,113 @@
+---
+title: "Conjuntura - EUA T1 2019"
+subtitle: "11 anos de crescimento, baixa inflação e desemprego"
+author: "Área de conjuntura internacional"
+date: '28 de Junho de 2018'
+institute: | 
+  | Instituto de Economia
+department: "Cecon" # Institute must be defined
+fontsize: 14pt
+fig_width: 24 
+fig_height: 15 
+classoption: aspectratio = 1610
+output: 
+   youngmetro::metro_beamer:
+     fig_caption: false
+---
+
+```{r setup, include=FALSE}
+```
+
+## Estrutura da apresentação
+
+
+1. Lado real
+  + Componentes da demanda
+  + Mercado de trabalho
+  + Guerra comercial
+
+2. Lado monetário
+
+# Componentes da demanda
+
+## Crescimento Trim./Trim. ano anterior (em %)
+
+![](./figs/Tab_PIB_Ano.png)
+
+## 
+
+![](./figs/Contrib_Var_AnoAnterior.png)
+
+##
+
+![](./figs/Investo_nResidencial_Ano.png)
+
+##
+
+![](./figs/Contrib_Investo_AnoAnterior.png)
+
+##
+
+![](./figs/Investo_TrickleDown.png)
+
+
+##
+
+![](./figs/Contrib_Consumo_Longa.png)
+
+# Mercado de trabalho
+
+##
+
+![](./figs/NominalReal_Wage.png)
+
+
+##
+
+![](./figs/Produtividade.png)
+
+##
+
+![](./figs/Contrib_Emprego_Longa.png)
+
+##
+
+![](./figs/Contrib_Servicos_AnoAnterior.png)
+
+# Guerra comercial
+
+##
+
+![](./figs/Export_Import.png)
+
+## 
+
+![](./figs/Saldo_Comercial.png)
+
+##
+
+![](./figs/Comex_Exp.png)
+
+
+##
+
+![](./figs/Comex_Imp.png)
+
+# Lado Monetário
+
+
+##
+
+![](./figs/Inflacao.png)
+
+##
+
+![](./figs/Juros.png)
+
+##
+
+![](./figs/Infla_Imoveis.png)
+
+## 
+
+![](../logo_CECON.png)
