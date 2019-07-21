@@ -229,20 +229,9 @@ logo_remir <- function (grafico = last_plot())
 
 
 #adiciona logo REMIR em um gráfico plotly e muda a barra modeBar
-logo_remir2 <- function (grafico = last_plot())
+logo_limpo <- function (grafico = last_plot())
 {
   grafico %>% ggplotly() %>%    
-    layout(
-      images = list(
-        list(source = "https://raw.githubusercontent.com/iedados/Publico/master/logo_REMIR2.png",
-             xref = "paper",
-             yref = "paper",
-             x= 0.0,
-             y= 1.0,
-             sizex = 0.25,
-             sizey = 0.25,
-             opacity = 0.25
-        )) )%>% 
     config(
       displayModeBar = TRUE , 
       displaylogo=FALSE,
