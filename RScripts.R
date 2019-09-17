@@ -243,14 +243,12 @@ logo_limpo <- function (grafico = last_plot())
 
 
 # função para baixar dados do Banco central diretamente
-get_BCB <- function(serie){
-   k <- read.csv2(text=
-     system(
-        paste0(
-            "wget -qO - http://api.bcb.gov.br/dados/serie/bcdata.sgs.",
-            serie,
-            "/dados?formato=csv"
-            ) ,
-            intern=TRUE)) 
-    return(k)
+get_BCB <- function(serie, start_date="01/01/1950", end_date = format(Sys.time(), "%d/%m/%Y")) {
+  k<- read.csv2(url(
+  paste0("http://api.bcb.gov.br/dados/serie/bcdata.sgs.",
+        serie,"/dados?formato=csv&dataInicial=",
+        start_date,
+        "&dataFinal=",
+        end_date)))
+  return(k)
 }
