@@ -240,3 +240,17 @@ logo_limpo <- function (grafico = last_plot())
       modeBarButtonsToRemove = list("sendDataToCloud","zoom2d","pan2d","select2d","lasso2d", "zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian", "hoverCompareCartesian", "resetScale2d", "toggleSpikelines")
     )
 }
+
+
+# função para baixar dados do Banco central diretamente
+get_BCB <- function(serie){
+   k <- read.csv2(text=
+     system(
+        paste0(
+            "wget -qO - http://api.bcb.gov.br/dados/serie/bcdata.sgs.",
+            serie,
+            "/dados?formato=csv"
+            ) ,
+            intern=TRUE)) 
+    return(k)
+}
