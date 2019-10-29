@@ -267,3 +267,20 @@ get_BCB2 <-function(serie, start_date="01/01/1950", end_date = format(Sys.time()
             end_date)))
   return(k)
 }
+
+# função variação 4 trimestres
+FazTexto.Var4Trim <- function(x) {
+  y<-c(1:(length(x)))               #cria variavel y to tamanho da serie inserida
+  for(i in 5:(length(x))) {         #para i vezes menos 4 
+    y[i] <- (((x[i]/x[i-4])-1)*100) #dividindo mes "atual" pelo mesmo mes do ano anterior
+  }
+  y[1:4]<-NA                        #coloca NA nas primeiras 4 entradas
+  return(y)                                  
+}
+
+
+# função variação de 1 período em porcentagem
+FazTexto.Var1Periodo.porc <-function(x,y){#x é a séria a ser análisada, y o número de digitos da saida
+  k=format(round((((x[length(x)]/x[length(x)-1])-1)*100),digits = y), big.mark=".", decimal.mark=",") #divide o ultimo valor da série x de 12 meses anteriores
+  return(k)
+}
