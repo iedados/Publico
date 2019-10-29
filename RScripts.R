@@ -284,3 +284,18 @@ FazTexto.Var1Periodo.porc <-function(x,y){#x é a séria a ser análisada, y o n
   k=format(round((((x[length(x)]/x[length(x)-1])-1)*100),digits = y), big.mark=".", decimal.mark=",") #divide o ultimo valor da série x de 12 meses anteriores
   return(k)
 }
+
+#função de limpar nomes de colunas (x é um dataframe), retorna os nomes de colunas sem acentos e espaços
+limpa_Nomes_colunas <- function(x){
+  unwanted_array = list(   'À'='A', 'Á'='A', 'Â'='A', 'Ã'='A', 'Ä'='A', 'Å'='A', 
+                           'Ç'='C', 'È'='E', 'É'='E',
+               'Ê'='E', 'Ì'='I', 'Í'='I', 'Ó'='O', 'Ô'='O', 'Õ'='O', 'Ö'='O', 'Ù'='U',
+               'Ú'='U', 'Û'='U', 'Ü'='U', 'à'='a', 'á'='a', 'â'='a', 'ã'='a', 'å'='a', 'ç'='c',
+               'è'='e', 'é'='e', 'ê'='e', 'ë'='e', 'í'='i','ó'='o', 'ô'='o', 'õ'='o',
+               'ö'='o', 'ü'='u', 'ú'='u', 'û'='u')
+
+# retira espaços (make.names) e troca os caracteres especiais da lista acima por outros  
+base::chartr(paste(names(unwanted_array), collapse=''),
+         paste(unwanted_array, collapse=''),
+         make.names(colnames(x)))
+}
