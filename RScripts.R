@@ -295,7 +295,8 @@ limpa_Nomes_colunas <- function(x){
                'ö'='o', 'ü'='u', 'ú'='u', 'û'='u')
 
 # retira espaços (make.names) e troca os caracteres especiais da lista acima por outros  
-base::chartr(paste(names(unwanted_array), collapse=''),
-         paste(unwanted_array, collapse=''),
-         make.names(colnames(x)))
+k <- base::chartr(paste(names(unwanted_array), collapse=''),
+                  paste(unwanted_array, collapse=''),
+                  make.names(colnames(x)))
+return(k)
 }
